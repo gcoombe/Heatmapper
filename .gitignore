@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+#Node things
+node_modules
+yarn.lock
+
+#Built files
+server/static
