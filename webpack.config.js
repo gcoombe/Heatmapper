@@ -4,6 +4,9 @@ var webpack = require('webpack');
 module.exports = {
   entry: './app/main.js',
   output: { path: './server/static', filename: 'bundle.js' },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [
       {
