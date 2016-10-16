@@ -9,6 +9,7 @@
   "author": "Graham Coombe <gscoombe@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "graceful-fs": "^4.1.9",
     "leaflet": "^1.0.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
@@ -19,7 +20,9 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "grunt": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
     "grunt-webpack": "^1.0.18",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
   }
 }

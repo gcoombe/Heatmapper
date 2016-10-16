@@ -1,34 +1,32 @@
 var webpackConfig = require('./webpack.config');
+var _ = require('lodash');
 
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webpack');
-  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.initConfig({
     webpack: {
       main: webpackConfig,
-
-      watch: true, // use webpacks watcher
-      // You need to keep the grunt process alive
-      keepalive: true, // don't finish the grunt task  }
+      dev: _.extend({}, webpackConfig, {
+        watch: true,
+        keepalive: true
+      })
     },
-    less: {
-      options: {
-        paths: ['app/styles/css'],
-        plugins: [
-          new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
-          new (require('less-plugin-clean-css'))(cleanCssOptions)
-        ],
-        modifyVars: {
-          imgPath: '"http://mycdn.com/path/to/images"',
-          bgColor: 'red'
+    sass: {
+      dev: {
+        options: {
+          style: 'expanded'
+        },
+        loadPath: "app/styles",
+        files: {
+          'server/static/main.css': 'app/styles/main.scss'
         }
-      },
-      files: {
-        'path/to/result.css': 'path/to/source.less'
       }
     }
   });
+
+  grunt.registerTask("default", ["webpack", "less"]);
 
 };
