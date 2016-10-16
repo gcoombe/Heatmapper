@@ -1,20 +1,26 @@
 import React from 'react';
 import Leaflet from 'leaflet';
+import ReactDOM from 'react-dom';
 
 class Map extends React.Component {
     constructor(props) {
         super(props);
-        this.mapId = "map";
         this.leafletElement = null;
     }
 
     componentDidMount() {
-        this.leafletElement = Leaflet.map(this.mapId).setView([this.props.lat, this.props.long], 12);
+        var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            osm = L.tileLayer(osmUrl, {
+                maxZoom: 18,
+                attribution: osmAttrib
+            });
+        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.long], 13).addLayer(osm);
     }
 
     render() {
         return (
-            <div id={this.mapId}></div>
+            <div className="map" id={this.mapId}></div>
         );
     }
 }
