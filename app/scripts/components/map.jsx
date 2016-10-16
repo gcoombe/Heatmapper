@@ -1,6 +1,5 @@
 import React from 'react';
 import Leaflet from 'leaflet';
-import LeafletDraw from 'leaflet-draw';
 import ReactDOM from 'react-dom';
 
 class Map extends React.Component {
@@ -43,7 +42,7 @@ class Map extends React.Component {
             drawnItems.addLayer(elm.layer);
             that.props.updateBounds(bounds);
         });
-        this.leafletElement.on("draw:drawstart", (elm) => {
+        this.leafletElement.on("draw:drawstart", () => {
             //Remove previously drawn rectangles
             drawnItems.getLayers().forEach(layer => {
                 this.leafletElement.removeLayer(layer);

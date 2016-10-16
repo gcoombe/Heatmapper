@@ -22,7 +22,9 @@
     "babel-preset-react": "^6.16.0",
     "grunt": "^1.0.1",
     "grunt-contrib-sass": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-webpack": "^1.0.18",
+    "load-grunt-tasks": "^3.5.2",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2"
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import Map from './map';
 
 class MapWithDirections extends React.Component {
 

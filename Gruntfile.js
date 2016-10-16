@@ -3,8 +3,7 @@ var _ = require('lodash');
 
 module.exports = function(grunt) {
 
-  grunt.loadNpmTasks('grunt-webpack');
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     webpack: {
@@ -24,9 +23,12 @@ module.exports = function(grunt) {
           'server/static/main.css': 'app/styles/main.scss'
         }
       }
+    },
+    eslint: {
+      target: ['app/scripts/**']
     }
   });
 
-  grunt.registerTask("default", ["webpack", "sass"]);
+  grunt.registerTask("default", ["eslint", "webpack", "sass"]);
 
 };
