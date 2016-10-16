@@ -1,4 +1,4 @@
-import Map from './map';
+import MapWithDirections from './mapWithDirections';
 import Hello from './hello';
 import React from 'react';
 
@@ -10,7 +10,7 @@ class App extends React.Component {
         return (
             <div>
                 <Hello/>
-                <Map/>
+                <MapWithDirections />
             </div>
         );
     }

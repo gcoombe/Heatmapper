@@ -27,6 +27,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask("default", ["webpack", "less"]);
+  grunt.registerTask("default", ["webpack", "sass"]);
 
 };
