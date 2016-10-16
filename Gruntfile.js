@@ -26,9 +26,19 @@ module.exports = function(grunt) {
     },
     eslint: {
       target: ['app/scripts/**']
+    },
+    cssmin: {
+      vendor: {
+        files: {
+          'server/static/vendor.css': [
+            'node_modules/leaflet/dist/leaflet.css',
+            'node_modules/leaflet/dist/leaflet.draw.css'
+          ]
+        }
+      }
     }
-  });
+});
 
-  grunt.registerTask("default", ["eslint", "webpack", "sass"]);
+  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "cssmin:vendor"]);
 
 };
