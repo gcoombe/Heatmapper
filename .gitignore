@@ -94,3 +94,5 @@ yarn.lock
 
 #Built files
 server/static
+
+.sass-cache/
