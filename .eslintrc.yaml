@@ -1,4 +1,6 @@
-extends: eslint:recommended
+extends:
+    - eslint:recommended
+    - "plugin:react/recommended"
 rules:
     no-console: 1
 parserOptions:
@@ -8,3 +10,5 @@ parserOptions:
         jsx: true
 env:
     browser: true
+plugins:
+    - react
