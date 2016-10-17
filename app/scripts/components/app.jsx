@@ -1,4 +1,6 @@
 import React from 'react';
+import Hello from './hello';
+import MapWithDirections from './mapWithDirections';
 
 class App extends React.Component {
     constructor(props) {
