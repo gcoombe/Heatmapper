@@ -32,13 +32,25 @@ module.exports = function(grunt) {
         files: {
           'server/static/vendor.css': [
             'node_modules/leaflet/dist/leaflet.css',
-            'node_modules/leaflet/dist/leaflet.draw.css'
+            'node_modules/leaflet-draw/dist/leaflet.draw.css',
+            'node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css'
           ]
         }
       }
+    },
+    copy: {
+      images: {
+        expand: true,
+        flatten: true,
+        src: ['node_modules/leaflet/dist/images/*.{png,gif,jpg,ico,svg}', 'node_modules/leaflet-draw/dist/images/*.{png,gif,jpg,ico,svg}'],
+        dest: 'server/static/images',
+        options: {
+          noProcess: ['**/*.{png,gif,jpg,ico,svg}']
+        }
+      },
     }
 });
 
-  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "cssmin:vendor"]);
+  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "cssmin:vendor", "copy:images"]);
 
 };
