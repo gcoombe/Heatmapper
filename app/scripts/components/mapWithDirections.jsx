@@ -12,9 +12,7 @@ class MapWithDirections extends React.Component {
 
     render() {
         return (
-            <div>
-                <Map updateBounds={this.setMapBounds}/>
-            </div>
+            <Map updateBounds={this.setMapBounds}/>
         )
     }
 }

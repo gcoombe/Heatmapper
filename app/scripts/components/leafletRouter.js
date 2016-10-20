@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "Leaflet*" }]*/
+
 import Leaflet from 'leaflet'
 import LeafletRouting from 'leaflet-routing-machine'
 import _ from 'lodash'
@@ -50,7 +52,7 @@ Leaflet.Routing.OSRMMatch = Leaflet.Routing.OSRMv1.extend({
 });
 
 Leaflet.Routing.osrmMatch = function(accessToken) {
-    return new L.Routing.OSRMMatch(accessToken);
+    return new Leaflet.Routing.OSRMMatch(accessToken);
 };
 
 export default Leaflet.Routing

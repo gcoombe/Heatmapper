@@ -1,5 +1,4 @@
 import React from 'react';
-import Hello from './hello';
 import MapWithDirections from './mapWithDirections';
 
 class App extends React.Component {
@@ -8,8 +7,7 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Hello/>
+            <div className="body">
                 <MapWithDirections />
             </div>
         );
