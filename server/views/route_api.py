@@ -9,21 +9,15 @@ def generate_route():
     if not all(x in request.get_json() for x in ("SW", "SE", "NW", "NE")):
         return abort(400)
     graph = _get_graph_from_request(request)
-    return jsonify(_solveGraph(graph))
+    return jsonify(result=_solveGraph(graph))
 
 
 def _get_graph_from_request(request):
-    args = request.get_json()
-    coords = [
-        _lat_long_pairs_to_dict(args['NW']),
-        _lat_long_pairs_to_dict(args['SE']),
-        _lat_long_pairs_to_dict(args['SE']),
-        _lat_long_pairs_to_dict(args['NW'])
-    ]
+    coords = request.get_json().values()
 
-    left = min([x["lon"] for x in coords])
+    left = min([x["lng"] for x in coords])
     bottom = min([x["lat"] for x in coords])
-    right = max([x["lon"] for x in coords])
+    right = max([x["lng"] for x in coords])
     top = max([x["lat"] for x in coords])
 
     return fetcher.fetch_bounded_box_graph(left, bottom, right, top)
@@ -31,20 +25,26 @@ def _get_graph_from_request(request):
 def _solveGraph(graph):
     edges = None
 
+    print("original")
+    print(graph.edge_list())
+    eularian_graph = None;
     original_graph = network.Graph(graph.edge_list())
+    print(original_graph)
 
     print('{} edges'.format(len(original_graph)))
     if not original_graph.is_eularian:
         print('Converting to Eularian path...')
-        graph = eularian.make_eularian(original_graph)
+        eularian_graph = eularian.make_eularian(original_graph)
         print('Conversion complete')
-        print('\tAdded {} edges'.format(len(graph) - len(original_graph)))
-        print('\tTotal cost is {}'.format(graph.total_cost))
+        print('Eularian len {}'.format(len(eularian_graph)))
+        print('\tAdded {} edges'.format(len(eularian_graph) - len(original_graph)))
+        print('\tTotal cost is {}'.format(eularian_graph.total_cost))
     else:
-        graph = original_graph
+        eularian_graph = original_graph
 
     print('Attempting to solve Eularian Circuit...')
-    route, attempts = eularian.eularian_path(graph)
+    print(eularian_graph)
+    route, attempts = eularian.eularian_path(eularian_graph)
     if not route:
         print("Could not complete")
         return None
@@ -53,8 +53,5 @@ def _solveGraph(graph):
         print('Solution: ({} edges)'.format(len(route) - 1))
         lat_long_route = [];
         for node_id in route:
-            lat_long_route.append((graph.nodes[node_id].lat, graph.nodes[node_id].lat))
+            lat_long_route.append({'lat': graph.nodes[node_id].lat, 'lng': graph.nodes[node_id].lon})
         return lat_long_route
-
-def _lat_long_pairs_to_dict(pair):
-    return {'lat': pair[0], 'lon': pair[1]}

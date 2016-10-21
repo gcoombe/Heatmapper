@@ -3,7 +3,7 @@
 import React from 'react';
 import Leaflet from 'leaflet';
 import LeafletDraw from 'leaflet-draw';
-import LeafletRouting from 'leaflet-routing-machine'
+// import LeafletRouting from 'leaflet-routing-machine'
 import LeafletRouter from './leafletRouter'
 
 class Map extends React.Component {
@@ -54,17 +54,18 @@ class Map extends React.Component {
             });
 
         });
+    }
 
-        //Test by going around the block
-        Leaflet.Routing.control({
-            waypoints: [
-                Leaflet.latLng(49.275868, -123.124258),
-                Leaflet.latLng(49.275238, -123.123292),
-                Leaflet.latLng(49.274195, -123.124858),
-                Leaflet.latLng(49.274846, -123.125813)
-            ],
-            router: Leaflet.Routing.osrmMatch({})
-        }).addTo(this.leafletElement);
+    componentDidUpdate() {
+        if (this.props.path) {
+            let waypoints = this.props.path.map(coord => {
+                return Leaflet.latLng(coord.lat, coord.lng)
+            });
+            Leaflet.Routing.control({
+                waypoints: waypoints,
+                router: Leaflet.Routing.osrmMatch({})
+            }).addTo(this.leafletElement);
+        }
     }
 
     componentWillUnmount() {
@@ -83,7 +84,8 @@ class Map extends React.Component {
 Map.propTypes = {
     updateBounds: React.PropTypes.func.isRequired,
     lat: React.PropTypes.number,
-    long: React.PropTypes.number
+    long: React.PropTypes.number,
+    path: React.PropTypes.array
 }
 
 Map.defaultProps = {
