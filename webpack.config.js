@@ -1,3 +1,5 @@
+var webpack  = require('webpack');
+
 module.exports = {
   entry: './app/scripts/main.js',
   output: { path: './server/static', filename: 'bundle.js' },
@@ -16,4 +18,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+  })
+]
 };
