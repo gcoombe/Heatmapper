@@ -7,7 +7,7 @@ import _ from 'lodash'
 Leaflet.Routing.OSRMMatch = Leaflet.Routing.OSRMv1.extend({
     options: {
         serviceUrl: 'https://router.project-osrm.org/match/v1',
-        profile: 'driving',
+        profile: 'walking',
         timeout: 30 * 1000,
         routingOptions: {
             alternatives: true,
