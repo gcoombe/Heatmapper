@@ -6,23 +6,34 @@ route_api = Blueprint('route_api', __name__)
 
 @route_api.route('/a/1/path', methods=['POST'])
 def generate_route():
-    if not all(x in request.get_json() for x in ("SW", "SE", "NW", "NE")):
+    json = request.get_json()
+    if not all(json is not None and x in request.get_json() for x in ("SW", "SE", "NW", "NE")):
         return abort(400)
     graph = _get_graph_from_request(request)
-    return jsonify(result=_solveGraph(graph))
+    return jsonify(result=_generate_result(graph.nodes.values(), _solve_graph(graph)))
 
+def _generate_result(nodes, path=None):
+    status =  None
+    if path is None:
+        status = "fail"
+    else:
+        status = "ok"
+
+    result_nodes = list(map(lambda node: {'lat': node.lat, 'lng': node.lon}, nodes))
+
+    return {'status': status, 'path': path, 'nodes': result_nodes}
 
 def _get_graph_from_request(request):
     coords = request.get_json().values()
 
-    left = min([x["lon"] for x in coords])
+    left = min([x["lng"] for x in coords])
     bottom = min([x["lat"] for x in coords])
-    right = max([x["lon"] for x in coords])
+    right = max([x["lng"] for x in coords])
     top = max([x["lat"] for x in coords])
 
     return fetcher.fetch_bounded_box_graph(left, bottom, right, top)
 
-def _solveGraph(graph):
+def _solve_graph(graph):
     edges = None
 
     print("original")
@@ -53,5 +64,5 @@ def _solveGraph(graph):
         print('Solution: ({} edges)'.format(len(route) - 1))
         lat_long_route = [];
         for node_id in route:
-            lat_long_route.append({'lat': graph.nodes[node_id].lat, 'lon': graph.nodes[node_id].lon})
+            lat_long_route.append({'lat': graph.nodes[node_id].lat, 'lng': graph.nodes[node_id].lon})
         return lat_long_route

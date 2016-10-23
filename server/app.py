@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from views.route_api import route_api
+from api_utils import CustomEncoder
 
 app = Flask(__name__)
 
 app.register_blueprint(route_api)
+app.json_encoder = CustomEncoder
 
 @app.route('/')
 def index():
