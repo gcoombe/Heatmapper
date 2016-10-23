@@ -20,7 +20,7 @@ class Map extends React.Component {
                 maxZoom: 18,
                 attribution: osmAttrib
             });
-        this.leafletElement = Leaflet.map(document.getElementById(this.mapId)).setView([this.props.lat, this.props.long], 13).addLayer(osm);
+        this.leafletElement = Leaflet.map(document.getElementById(this.mapId)).setView([this.props.lat, this.props.lng], 13).addLayer(osm);
 
         // Initialise the FeatureGroup to store editable layers
         const drawnItems = new Leaflet.FeatureGroup();
@@ -84,13 +84,13 @@ class Map extends React.Component {
 Map.propTypes = {
     updateBounds: React.PropTypes.func.isRequired,
     lat: React.PropTypes.number,
-    long: React.PropTypes.number,
+    lng: React.PropTypes.number,
     path: React.PropTypes.array
 }
 
 Map.defaultProps = {
     lat: 49.2573,
-    long: -123.1241
+    lng: -123.1241
 }
 
 export default Map;
