@@ -61,7 +61,7 @@ def _solve_graph(graph):
         return None
     else:
         print('\tSolved in {} attempts'.format(attempts, route))
-        print('Solution: ({} edges)'.format(len(route) - 1))
+        print('Solution: ({} edges)'.format(route))
         lat_long_route = [];
         for node_id in route:
             lat_long_route.append({'lat': graph.nodes[node_id].lat, 'lng': graph.nodes[node_id].lon})
