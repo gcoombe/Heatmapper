@@ -9,6 +9,7 @@
   "author": "Graham Coombe <gscoombe@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "graceful-fs": "^4.1.9",
     "leaflet": "^1.0.1",
     "leaflet-draw": "^0.3.2",
@@ -20,9 +21,11 @@
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
+    "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "enzyme": "^2.5.1",
     "eslint-plugin-react": "^6.4.1",
     "exports-loader": "^0.6.3",
     "grunt": "^1.0.1",
@@ -32,8 +35,21 @@
     "grunt-eslint": "^19.0.0",
     "grunt-webpack": "^1.0.18",
     "imports-loader": "^0.6.5",
+    "jest": "^16.0.2",
     "load-grunt-tasks": "^3.5.2",
+    "react-addons-test-utils": "^15.3.2",
+    "react-test-renderer": "^15.3.2",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {},
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   }
 }
