@@ -28,13 +28,14 @@ class MapContainer extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(bounds)
+            body: JSON.stringify(boundPoints)
         }).then(function (response) {
             if (response.ok) {
-                return response.json()
+                return response.json();
             }
         }).then(function (json) {
             if (json) {
+                json = json.result;
                 if (json.status === "ok") {
                     that.setState({
                         bounds: boundPoints,
