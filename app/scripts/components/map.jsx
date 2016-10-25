@@ -1,6 +1,7 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "Leaflet*" }]*/
 
 import React from 'react';
+import ReactDOM from 'react-dom'
 import Leaflet from 'leaflet';
 import LeafletDraw from 'leaflet-draw';
 // import LeafletRouting from 'leaflet-routing-machine'
@@ -20,7 +21,9 @@ class Map extends React.Component {
                 maxZoom: 18,
                 attribution: osmAttrib
             });
-        this.leafletElement = Leaflet.map(document.getElementById(this.mapId)).setView([this.props.lat, this.props.lng], 13).addLayer(osm);
+        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this));
+        this.leafletElement.setView([this.props.lat, this.props.lng], 13)
+        this.leafletElement.addLayer(osm);
 
         // Initialise the FeatureGroup to store editable layers
         const drawnItems = new Leaflet.FeatureGroup();
