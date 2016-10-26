@@ -21,9 +21,7 @@ class Map extends React.Component {
                 maxZoom: 18,
                 attribution: osmAttrib
             });
-        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this));
-        this.leafletElement.setView([this.props.lat, this.props.lng], 13)
-        this.leafletElement.addLayer(osm);
+        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.lng], 13).addLayer(osm);
 
         // Initialise the FeatureGroup to store editable layers
         const drawnItems = new Leaflet.FeatureGroup();
@@ -44,6 +42,9 @@ class Map extends React.Component {
         });
         this.leafletElement.addControl(drawControl);
 
+        this.markerGroup = Leaflet.layerGroup()
+            .addTo(this.leafletElement);
+
         let that = this;
         this.leafletElement.on("draw:created", (elm) => {
             const bounds = elm.layer.getBounds();
@@ -55,7 +56,7 @@ class Map extends React.Component {
             drawnItems.getLayers().forEach(layer => {
                 this.leafletElement.removeLayer(layer);
             });
-
+            this.markerGroup.clearLayers();
         });
     }
 
@@ -68,6 +69,11 @@ class Map extends React.Component {
                 waypoints: waypoints,
                 router: Leaflet.Routing.osrmMatch({})
             }).addTo(this.leafletElement);
+        } else {
+            this.props.nodes.forEach((node) => {
+                const marker = Leaflet.marker([node.lat, node.lng]);
+                this.markerGroup.addLayer(marker);
+            });
         }
     }
 
@@ -93,7 +99,8 @@ Map.propTypes = {
 
 Map.defaultProps = {
     lat: 49.2573,
-    lng: -123.1241
+    lng: -123.1241,
+    updateBounds: () => {}
 }
 
 export default Map;
