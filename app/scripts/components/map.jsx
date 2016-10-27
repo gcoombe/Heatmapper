@@ -16,13 +16,13 @@ class Map extends React.Component {
     }
 
     componentDidMount() {
-        const osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            osm = Leaflet.tileLayer(osmUrl, {
-                maxZoom: 18,
-                attribution: osmAttrib
-            });
-        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.lng], 13).addLayer(osm);
+        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.lng], 13)
+
+        L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            accessToken: CONFIG.mapboxKey
+        }).addTo(this.leafletElement);
 
         // Initialise the FeatureGroup to store editable layers
         const drawnItems = new Leaflet.FeatureGroup();
