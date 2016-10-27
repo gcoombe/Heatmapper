@@ -79,6 +79,17 @@ class Map extends React.Component {
                 this.markerGroup.addLayer(marker);
             });
         }
+
+        if (CONFIG.debug) {
+            for (let i = 0; i < this.props.path.length - 1; i++) {
+                const edgeLatLngs = [
+                    [this.props.path[i].lat, this.props.path[i].lng],
+                    [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
+                ];
+                const line = Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
+                // this.leafletElement.fitBounds(line.getBounds());
+            }
+        }
     }
 
     componentWillUnmount() {

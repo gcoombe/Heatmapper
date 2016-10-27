@@ -7,8 +7,11 @@
     <!-- styles -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"></link>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor.css') }}"></link>
-    <script>
-      CONFIG = {mapboxKey: '{{ mapbox_key }}'};
+    <script type="text/javascript">
+      CONFIG = {
+        mapboxKey: '{{ mapbox_key }}',
+        debug: '{{ DEBUG }}'
+    };
     </script>
   </head>
   <body>
