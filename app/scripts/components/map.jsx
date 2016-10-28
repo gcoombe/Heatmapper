@@ -73,6 +73,16 @@ class Map extends React.Component {
                 waypoints: _.slice(waypoints, 0, 25),
                 router: Leaflet.Routing.mapbox(CONFIG.mapboxKey)
             }).addTo(this.leafletElement);
+            if (CONFIG.debug) {
+                for (let i = 0; i < this.props.path.length - 1; i++) {
+                    const edgeLatLngs = [
+                        [this.props.path[i].lat, this.props.path[i].lng],
+                        [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
+                    ];
+                    const line = Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
+                    // this.leafletElement.fitBounds(line.getBounds());
+                }
+            }
         } else {
             this.props.nodes.forEach((node) => {
                 const marker = Leaflet.marker([node.lat, node.lng]);
@@ -80,16 +90,6 @@ class Map extends React.Component {
             });
         }
 
-        if (CONFIG.debug) {
-            for (let i = 0; i < this.props.path.length - 1; i++) {
-                const edgeLatLngs = [
-                    [this.props.path[i].lat, this.props.path[i].lng],
-                    [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
-                ];
-                const line = Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
-                // this.leafletElement.fitBounds(line.getBounds());
-            }
-        }
     }
 
     componentWillUnmount() {
