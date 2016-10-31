@@ -1,12 +1,16 @@
 @import "vars";
 @import "foundation-imports";
 
-.body {
-    position: relative;
+// .body {
+//     position: relative;
+// }
+
+#root {
+    height: 100%;
 }
 
 .map {
-    height: 800px;
+    height: 100%;
     width: 100%;
 }
 
