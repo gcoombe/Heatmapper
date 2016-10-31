@@ -36,11 +36,8 @@ def _get_graph_from_request(request):
 def _solve_graph(graph):
     edges = None
 
-    print("original")
-    print(graph.edge_list())
     eularian_graph = None;
     original_graph = network.Graph(graph.edge_list())
-    print(original_graph)
 
     print('{} edges'.format(len(original_graph)))
     if not original_graph.is_eularian:
