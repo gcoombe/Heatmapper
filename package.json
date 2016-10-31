@@ -48,7 +48,14 @@
   "scripts": {
     "test": "jest"
   },
-  "jest": {},
+  "jest": {
+    "globals": {
+      "CONFIG": {
+        "mapboxKey": "test",
+        "debug": true
+      }
+    }
+  },
   "babel": {
     "presets": [
       "es2015",
