@@ -18,7 +18,7 @@ def create_edge(name, lat_long_pairs):
     return Edge(way_id_counter, nodes, 1, {"name": name})
 
 def generate_route(locs):
-    return list(map(lambda loc: {"lat": loc[0], "lon": loc[1]}, locs))
+    return list(map(lambda loc: {"lat": loc[0], "lng": loc[1]}, locs))
 
 class DirectionsGeneratorTestCase(unittest.TestCase):
 
@@ -29,7 +29,7 @@ class DirectionsGeneratorTestCase(unittest.TestCase):
         loc_4 = [50, -124]
         edges = [create_edge("Main st", [loc_1, loc_2]), create_edge("Arbutus st", [loc_2, loc_3]), create_edge("Fir st", [loc_1, loc_4])]
 
-        lat_lon_pairs = [{"lat": edges[0].nodes[0].lat, "lon": edges[0].nodes[0].lon}, {"lat": edges[0].nodes[1].lat, "lon": edges[0].nodes[1].lon}]
+        lat_lon_pairs = [{"lat": edges[0].nodes[0].lat, "lng": edges[0].nodes[0].lon}, {"lat": edges[0].nodes[1].lat, "lng": edges[0].nodes[1].lon}]
         direction = generator.generate_direction(edges[0], lat_lon_pairs[0], lat_lon_pairs[1], edges)
         self.assertEqual(direction, "Main st (Fir st - Arbutus st)")
 

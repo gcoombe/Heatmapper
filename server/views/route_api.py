@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, Response, abort
 from osmparser import fetcher
+from directions import generator
 from chinesepostman import eularian, network
 
 route_api = Blueprint('route_api', __name__)
@@ -10,18 +11,20 @@ def generate_route():
     if not all(json is not None and x in request.get_json() for x in ("SW", "SE", "NW", "NE")):
         return abort(400)
     graph = _get_graph_from_request(request)
-    return jsonify(result=_generate_result(graph.nodes.values(), _solve_graph(graph)))
+    return jsonify(result=_generate_result(graph, _solve_graph(graph)))
 
-def _generate_result(nodes, path=None):
+def _generate_result(graph, path=None):
     status =  None
+    directions = None
     if path is None:
         status = "fail"
     else:
         status = "ok"
+        directions = generator.generate_directions(path, graph.edges)
 
-    result_nodes = list(map(lambda node: {'lat': node.lat, 'lng': node.lon}, nodes))
+    result_nodes = list(map(lambda node: {'lat': node.lat, 'lng': node.lon}, graph.nodes.values()))
 
-    return {'status': status, 'path': path, 'nodes': result_nodes}
+    return {'status': status, 'path': path, 'nodes': result_nodes, 'directions': directions}
 
 def _get_graph_from_request(request):
     coords = request.get_json().values()

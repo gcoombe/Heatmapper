@@ -17,7 +17,7 @@ class RoutApiTestCase(unittest.TestCase):
 
     def generate_simple_graph(self):
         nodes = {"1": Node("1", 49.278868, -123.125652), "2": Node("2", 49.279932, -123.124053), "3": Node("3", 49.279281, -123.123034)};
-        edges = [Edge("e1", [nodes["1"], nodes["2"]], 1), Edge("e2", [nodes["2"], nodes["3"]], 1)]
+        edges = [Edge("e1", [nodes["1"], nodes["2"]], 1, {"name": "Main st"}), Edge("e2", [nodes["2"], nodes["3"]], 1, {"name": "Park st"})]
         return Graph(nodes, edges)
 
     def generate_disconnected_graph(self):
@@ -50,6 +50,21 @@ class RoutApiTestCase(unittest.TestCase):
         self.assertEqual(data["status"], "ok")
         self.assertIsNotNone(data["path"])
         self.assertCountEqual(data["nodes"], [{"lat": 49.278868, "lng": -123.125652}, {"lat": 49.279932, "lng": -123.124053}, {"lat": 49.279281, "lng": -123.123034}])
+
+    @patch('views.route_api.fetcher', spec=True)
+    def test_simple_route_directions(self, mock_graph_fetcher):
+        self.mock_returns(mock_graph_fetcher, True)
+        #Lat/long values are placeholder, dummy values
+        rv = self.app.post("/a/1/path", data=json.dumps({
+            'NW': {'lat': -0.489, "lng": 51.686},
+            'NE': {"lat": 0.236, "lng": 51.686},
+            'SE': {"lat": 0.236, "lng": 51.28},
+            'SW': {"lat": -0.489, "lng": 51.28}
+        }), content_type='application/json')
+        data = json.loads(rv.get_data(as_text=True))["result"]
+        self.assertEqual(data["status"], "ok")
+        self.assertIn("Main st (? - Park st)", data["directions"])
+        self.assertIn("Park st (? - Main st)", data["directions"])
 
     @patch('views.route_api.fetcher', spec=True)
     def test_disconnected_route(self, mock_graph_fetcher):
