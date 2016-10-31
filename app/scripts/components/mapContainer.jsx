@@ -9,7 +9,7 @@ class MapContainer extends React.Component {
             bounds: null,
             path: null,
             nodes: null
-        }
+        };
         this.updateBounds = this.updateBounds.bind(this);
     }
 
@@ -55,7 +55,7 @@ class MapContainer extends React.Component {
                     path: null
                 });
             }
-        })
+        });
     }
 
     render() {
@@ -65,4 +65,4 @@ class MapContainer extends React.Component {
     }
 }
 
-export default MapContainer
+export default MapContainer;

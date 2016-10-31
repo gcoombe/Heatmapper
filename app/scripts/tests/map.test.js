@@ -1,9 +1,8 @@
 //I can't get enzyme.mount to work so using react test utils.
 // import TestUtils from 'react-addons-test-utils';
 import Map from '../components/map';
-import {mount, shallow} from 'enzyme';
+import {mount} from 'enzyme';
 import React from 'react';
-import jsdom from "jsdom";
 import Leaflet from "leaflet";
 
 describe("map", () => {

@@ -1,8 +1,8 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "Leaflet*" }]*/
 
-import Leaflet from 'leaflet'
-import LeafletRouting from 'leaflet-routing-machine'
-import _ from 'lodash'
+import Leaflet from 'leaflet';
+import LeafletRouting from 'leaflet-routing-machine';
+import _ from 'lodash';
 
 Leaflet.Routing.OSRMMatch = Leaflet.Routing.Mapbox.extend({
     options: {
@@ -10,30 +10,6 @@ Leaflet.Routing.OSRMMatch = Leaflet.Routing.Mapbox.extend({
             profile: 'mapbox.walking',
             useHints: false
         },
-
-
-    buildRouteUrl: function(waypoints, options) {
-        var locs = [],
-            hints = [],
-            wp,
-            latLng,
-            computeInstructions;
-
-        for (var i = 0; i < waypoints.length; i++) {
-            wp = waypoints[i];
-            latLng = wp.latLng;
-            locs.push(latLng.lng + ',' + latLng.lat);
-            hints.push(this._hints.locations[this._locationKey(latLng)] || '');
-        }
-
-        computeInstructions =
-            !(options && options.geometryOnly);
-
-        return this.options.serviceUrl + '/' + this.options.profile + '/' +
-            locs.join(';') + '?' +
-            (options.geometryOnly ? (options.simplifyGeometry ? '' : 'overview=full') : 'overview=false') +
-            '&steps=' + computeInstructions.toString();
-    },
 
     _routeDone: function (response, inputWaypoints, options, callback, context) {
         response.waypoints = response.tracepoints;
@@ -49,4 +25,4 @@ Leaflet.Routing.osrmMatch = function(accessToken) {
     return new Leaflet.Routing.OSRMMatch(accessToken);
 };
 
-export default Leaflet.Routing
+export default Leaflet.Routing;

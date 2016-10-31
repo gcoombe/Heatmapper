@@ -3,12 +3,18 @@ extends:
     - "plugin:react/recommended"
 rules:
     no-console: 1
+    react/no-find-dom-node: 0
+    semi: 2
 parserOptions:
     ecmaVersion: 6
     sourceType: module
     ecmaFeatures:
         jsx: true
+        modules: true
 env:
     browser: true
+    jest: true
 plugins:
     - react
+globals:
+  CONFIG: true

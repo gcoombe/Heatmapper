@@ -4,16 +4,15 @@ import 'whatwg-fetch';
 import Promise from 'bluebird';
 import React from 'react';
 import Leaflet from 'leaflet';
-import _ from 'lodash';
 
 describe('updateBounds', () => {
 
     let apiReturn;
     beforeAll(() => {
-        apiReturn = null
+        apiReturn = null;
     });
 
-    window.fetch = jest.fn().mockImplementation((url, options) => {
+    window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve(apiReturn);
     });
 
@@ -41,7 +40,7 @@ describe('updateBounds', () => {
                 SE: {lat: 49.256, lng: -123.094919}
             });
             expect(wrapper.state().nodes).toEqual(successResponse.result.nodes);
-        })
+        });
     });
 
     it("Sets state without path on fail", () => {
@@ -64,4 +63,4 @@ describe('updateBounds', () => {
             expect(wrapper.state().nodes).toEqual(failResponse.result.nodes);
         });
     });
-})
+});

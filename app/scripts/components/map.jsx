@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "Leaflet*" }]*/
 
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import Leaflet from 'leaflet';
 import LeafletDraw from 'leaflet-draw';
 // import LeafletRouting from 'leaflet-routing-machine'
@@ -16,9 +16,9 @@ class Map extends React.Component {
     }
 
     componentDidMount() {
-        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.lng], 13)
+        this.leafletElement = Leaflet.map(ReactDOM.findDOMNode(this)).setView([this.props.lat, this.props.lng], 13);
 
-        L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token={accessToken}', {
+        Leaflet.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
             maxZoom: 18,
             accessToken: CONFIG.mapboxKey
@@ -64,10 +64,10 @@ class Map extends React.Component {
     componentDidUpdate() {
         if (this.props.path) {
             let waypoints = this.props.path.map(coord => {
-                return Leaflet.latLng(coord.lat, coord.lng)
+                return Leaflet.latLng(coord.lat, coord.lng);
             });
             if (waypoints.length > 25) {
-                console.warn("Only showing path for 1st 25 coordinates")
+                console.warn("Only showing path for 1st 25 coordinates");
             }
             Leaflet.Routing.control({
                 waypoints: _.slice(waypoints, 0, 25),
@@ -79,8 +79,7 @@ class Map extends React.Component {
                         [this.props.path[i].lat, this.props.path[i].lng],
                         [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
                     ];
-                    const line = Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
-                    // this.leafletElement.fitBounds(line.getBounds());
+                    Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
                 }
             }
         } else {
@@ -109,13 +108,14 @@ Map.propTypes = {
     updateBounds: React.PropTypes.func.isRequired,
     lat: React.PropTypes.number,
     lng: React.PropTypes.number,
-    path: React.PropTypes.array
-}
+    path: React.PropTypes.array,
+    nodes: React.PropTypes.array
+};
 
 Map.defaultProps = {
     lat: 49.2573,
     lng: -123.1241,
     updateBounds: () => {}
-}
+};
 
 export default Map;
