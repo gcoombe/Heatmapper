@@ -1,3 +1,6 @@
+@import "vars";
+@import "foundation-imports";
+
 .body {
     position: relative;
 }
@@ -9,12 +12,12 @@
 
 .leaflet-routing-alt  {
     h2 {
-        display: none
+        display: none;
     }
 }
 
 .map-directions {
-    position: absolute
-    top: 0
-    right: 0
+    position: absolute;
+    top: 0;
+    right: 0;
 }

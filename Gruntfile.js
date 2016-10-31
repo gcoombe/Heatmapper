@@ -16,9 +16,9 @@ module.exports = function(grunt) {
     sass: {
       dev: {
         options: {
-          style: 'expanded'
+          style: 'expanded',
+          loadPath: ["app/styles/", "node_modules/foundation-sites/scss/", "node_modules/foundation-sites/scss/settings"]
         },
-        loadPath: "app/styles",
         files: {
           'server/static/main.css': 'app/styles/main.scss'
         }
@@ -48,9 +48,22 @@ module.exports = function(grunt) {
           noProcess: ['**/*.{png,gif,jpg,ico,svg}']
         }
       },
+    },
+    postcss: {
+      options: {
+          map: true,
+          processors: [
+              require('autoprefixer')({
+                  browsers: ['last 2 versions']
+              })
+          ]
+      },
+      dist: {
+          src: 'server/static/*.css'
+      }
     }
 });
 
-  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "cssmin:vendor", "copy:images"]);
+  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "postcss:dist", "cssmin:vendor", "copy:images"]);
 
 };
