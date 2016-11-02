@@ -64,6 +64,6 @@ module.exports = function(grunt) {
     }
 });
 
-  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "postcss:dist", "cssmin:vendor", "copy:images"]);
+  grunt.registerTask("default", ["eslint", "webpack:main", "sass", "postcss", "cssmin:vendor", "copy:images"]);
 
 };

@@ -6,7 +6,6 @@ import Leaflet from 'leaflet';
 import LeafletDraw from 'leaflet-draw';
 // import LeafletRouting from 'leaflet-routing-machine'
 import LeafletRouter from './leafletRouter';
-import _ from 'lodash';
 
 class Map extends React.Component {
     constructor(props) {
@@ -69,10 +68,6 @@ class Map extends React.Component {
             if (waypoints.length > 25) {
                 console.warn("Only showing path for 1st 25 coordinates");
             }
-            Leaflet.Routing.control({
-                waypoints: _.slice(waypoints, 0, 25),
-                router: Leaflet.Routing.mapbox(CONFIG.mapboxKey)
-            }).addTo(this.leafletElement);
             if (CONFIG.debug) {
                 for (let i = 0; i < this.props.path.length - 1; i++) {
                     const edgeLatLngs = [

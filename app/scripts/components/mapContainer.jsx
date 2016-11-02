@@ -1,5 +1,6 @@
 import React from 'react';
 import Map from './map';
+import MapDirections from './mapDirections';
 import 'whatwg-fetch';
 
 class MapContainer extends React.Component {
@@ -8,7 +9,8 @@ class MapContainer extends React.Component {
         this.state = {
             bounds: null,
             path: null,
-            nodes: null
+            nodes: null,
+            directions: null
         };
         this.updateBounds = this.updateBounds.bind(this);
     }
@@ -40,12 +42,14 @@ class MapContainer extends React.Component {
                     that.setState({
                         bounds: boundPoints,
                         path: json.path,
-                        nodes: json.nodes
+                        nodes: json.nodes,
+                        directions: json.directions
                     });
                 } else {
                     that.setState({
                         bounds: boundPoints,
                         path: null,
+                        directions: null,
                         nodes: json.nodes
                     });
                 }
@@ -60,7 +64,14 @@ class MapContainer extends React.Component {
 
     render() {
         return (
-            <Map updateBounds={this.updateBounds} bounds={this.state.bounds} path={this.state.path} nodes={this.state.nodes} />
+            <div className="container">
+                <Map updateBounds={this.updateBounds} bounds={this.state.bounds} path={this.state.path} nodes={this.state.nodes} />
+                {
+                    this.state.directions
+                    ? <MapDirections directions={this.state.directions}/>
+                    : null
+                }
+            </div>
         );
     }
 }

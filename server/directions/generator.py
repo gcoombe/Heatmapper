@@ -8,7 +8,7 @@ def _normalize_lat_lng(lat_long_pair):
     return {"lat": lat_long_pair["lat"], "lng": lat_long_pair["lng"], "lon": lat_long_pair["lng"]}
 
 def _find_edge(lat_lng_pair, edges):
-    return next((edge for edge in edges if edge.contains_segment(lat_lng_pair[0], lat_lng_pair[1])), None)
+    return next((edge for edge in edges if edge.contains_segment(lat_lng_pair[0], lat_lng_pair[1], head_to_tail=True)), None)
 
 def generate_direction(edge, start_lat_lng, end_lat_lng, all_edges):
     other_edge_start = list(filter(lambda other_edge: other_edge.id != edge.id and other_edge.contains_lat_long(start_lat_lng["lat"], start_lat_lng["lng"]), all_edges))
