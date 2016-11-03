@@ -68,14 +68,18 @@ class Map extends React.Component {
             if (waypoints.length > 25) {
                 console.warn("Only showing path for 1st 25 coordinates");
             }
+            for (let i = 0; i < this.props.path.length - 1; i++) {
+                const edgeLatLngs = [
+                    [this.props.path[i].lat, this.props.path[i].lng],
+                    [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
+                ];
+                Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
+            }
             if (CONFIG.debug) {
-                for (let i = 0; i < this.props.path.length - 1; i++) {
-                    const edgeLatLngs = [
-                        [this.props.path[i].lat, this.props.path[i].lng],
-                        [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
-                    ];
-                    Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
-                }
+                this.props.nodes.forEach((node) => {
+                    const marker = Leaflet.marker([node.lat, node.lng]);
+                    this.markerGroup.addLayer(marker);
+                });
             }
         } else {
             this.props.nodes.forEach((node) => {

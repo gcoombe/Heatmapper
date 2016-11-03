@@ -22,7 +22,7 @@ def _generate_result(graph, path=None):
         status = "ok"
         directions = generator.generate_directions(path, graph.edges)
 
-    result_nodes = list(map(lambda node: {'lat': node.lat, 'lng': node.lon}, graph.nodes.values()))
+    result_nodes = list(map(lambda node: {'lat': node.lat, 'lng': node.lon}, graph.head_tail_nodes()))
 
     return {'status': status, 'path': path, 'nodes': result_nodes, 'directions': directions}
 
