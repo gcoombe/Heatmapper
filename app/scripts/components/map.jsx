@@ -4,8 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Leaflet from 'leaflet';
 import LeafletDraw from 'leaflet-draw';
-// import LeafletRouting from 'leaflet-routing-machine'
 import LeafletRouter from './leafletRouter';
+import LeafletPolylineDecorator from 'leaflet-polylinedecorator';
+
 
 class Map extends React.Component {
     constructor(props) {
@@ -73,7 +74,23 @@ class Map extends React.Component {
                     [this.props.path[i].lat, this.props.path[i].lng],
                     [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
                 ];
-                this.markerGroup.addLayer(Leaflet.polyline(edgeLatLngs, {color: '#009933'}))
+
+                let line = Leaflet.polyline(edgeLatLngs, {color: '#00B3FD'});
+                this.markerGroup.addLayer(line);
+                this.markerGroup.addLayer(Leaflet.polylineDecorator(line, {
+                    patterns: [
+                        // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+                        {
+                            offset: 50,
+                            repeat: 100,
+                            symbol: Leaflet.Symbol.arrowHead({
+                                pathOptions: {
+                                    // stroke: true,
+                                    weight: 3
+                                }
+                            })}
+                    ]
+                }));
             }
         } else {
             this.props.nodes.forEach((node) => {
