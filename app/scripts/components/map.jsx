@@ -73,13 +73,7 @@ class Map extends React.Component {
                     [this.props.path[i].lat, this.props.path[i].lng],
                     [this.props.path[i + 1].lat, this.props.path[i + 1].lng]
                 ];
-                Leaflet.polyline(edgeLatLngs, {color: '#009933'}).addTo(this.leafletElement);
-            }
-            if (CONFIG.debug) {
-                this.props.nodes.forEach((node) => {
-                    const marker = Leaflet.marker([node.lat, node.lng]);
-                    this.markerGroup.addLayer(marker);
-                });
+                this.markerGroup.addLayer(Leaflet.polyline(edgeLatLngs, {color: '#009933'}))
             }
         } else {
             this.props.nodes.forEach((node) => {
