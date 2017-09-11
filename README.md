@@ -1,5 +1,7 @@
 # Heatmapper
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/gcoombe/heatmapper.svg)](https://greenkeeper.io/)
+
 ##Before deploying
 
 This app interacts with the mapbox api so you will need an access token.  Accounts are free up to 5,000 requests a month. (https://www.mapbox.com/)
